@@ -20,40 +20,90 @@ Kadıköy'de bugün ne giysem, ne yapsam?**
 ## Ekran görüntüleri
 
 <p align="center">
-  <img src="docs/ekran_sehirler.png" width="30%" alt="Şehirler">
-  <img src="docs/ekran_detay.png" width="30%" alt="Hava detayı, ne giysem, ne yapsam">
-  <img src="docs/ekran_haftalik.png" width="30%" alt="7 günlük tahmin">
+  <img src="docs/ekran_sehirler.png" width="24%" alt="Şehirler">
+  <img src="docs/tema_kapali.png" width="24%" alt="İstanbul hava detayı">
+  <img src="docs/ekran_sevdiklerim.png" width="24%" alt="Sevdiklerim">
+  <img src="docs/ekran_planlarim.png" width="24%" alt="Planlarım">
 </p>
 
 ## Özellikler
 
-### 🏙️ Şehirler
-- 81 il; **yazdıkça öneri** ("mala" → Malatya, Malazgirt). Türkçe karakter gerekmez ("kadikoy", "uskudar").
-- Uygulamanın içinde **922 ilçelik** resmî liste: ilçe önerileri anında ve internetsiz gelir.
-  Semtler ("Moda · Kadıköy semti") OpenStreetMap'ten, alakasız sonuçlar süzülerek gelir.
-- İl, ilçe ya da semt: **hepsi favoriye eklenebilir** (Kadıköy, Moda...).
+### 🏙️ Şehirler ve favoriler
 
-### 🌤️ Hava detayı
-- Anlık, saatlik ve 7 günlük tahmin; **havaya ve gece/gündüze göre renk değiştiren** başlık.
-- Bir ile dokununca önce ilin havası, altında **bütün ilçelerinin anlık havası** (İstanbul'un 39 ilçesi **tek istekte**).
-- **Bugün ne giymeliyim?** Rüzgârın hissettirdiği sıcaklığa, neme, akşam serinliğine, gün içi farka ve bölgeye bakar
-  ("Rüzgâr yüzünden 9° gibi hissettiriyor", "Karadeniz'de hava çabuk değişir, yağmurluğun çantanda dursun").
-- **Bugün ne yapsam?** Şehre özel yerler ve lezzetler (İstanbul'da vapur, Gaziantep'te baklava); yağmurda kapalı mekânlar.
-  Öneriler **her gün değişir**, aynı gün sabit kalır.
+<img src="docs/ekran_favoriler.png" width="28%" align="right" alt="Favoriler">
+
+- **81 il** tek listede; plaka numarasıyla birlikte.
+- **Yazdıkça öneri:** "mala" yazınca Malatya ve Malazgirt çıkar. Türkçe karakter gerekmez:
+  "kadikoy" → Kadıköy, "uskudar" → Üsküdar.
+- Uygulamanın içinde **922 ilçelik** resmî liste var; ilçe önerileri anında ve internetsiz gelir.
+  Semtler (Moda, Bebek...) OpenStreetMap'ten gelir, alakasız sonuçlar süzülür.
+- **Favoriler:** Kalbe dokunarak il, ilçe ya da semt ekleyebilirsin. Favoriler sekmesinde
+  İstanbul'un yanında "Kadıköy, İstanbul" gibi ilçeler de görünür.
+- Bir ile dokununca önce ilin havası, altında **bütün ilçelerinin anlık havası** listelenir
+  (İstanbul'un 39 ilçesi tek istekte gelir).
+
+<br clear="right">
+
+### 🎨 Havaya göre değişen tema
+
+Detay ekranının başlığı, o şehrin **o anki havasına ve gece/gündüze göre** renk değiştirir:
+
+<p align="center">
+  <img src="docs/temalar.png" width="90%" alt="Hava durumuna göre tema renkleri">
+</p>
+
+<p align="center">
+  <img src="docs/tema_kapali.png" width="28%" alt="İstanbul, kapalı: mor-mavi">
+  <img src="docs/tema_yagmurlu.png" width="28%" alt="Muğla, sağanak: mavi">
+  <img src="docs/ekran_karadeniz.png" width="28%" alt="Trabzon, parçalı bulutlu">
+</p>
+<p align="center"><sub>Gerçek ekranlar: İstanbul kapalı · Muğla sağanak · Trabzon parçalı bulutlu</sub></p>
+
+Detay ekranında ayrıca:
+- **Bugün ne giymeliyim?** Rüzgârın hissettirdiği sıcaklığa, neme, akşam serinliğine ve bölgeye bakar.
+  Muğla'da sağanakta "Bol yağış var, yağmurluk giy", Trabzon'da "Karadeniz'de hava çabuk değişir,
+  yağmurluğun çantanda dursun" der.
+- **Bugün ne yapsam?** Şehre özel yerler ve lezzetler önerir: Trabzon'da "Boztepe'den şehri izle,
+  kuymak dene", yağmurlu Muğla'da "Bodrum Sualtı Arkeoloji Müzesi'ni gez". Öneriler her gün değişir.
+- Anlık, saatlik ve 7 günlük tahmin; nem ve rüzgâr.
 
 ### 💌 Sevdiklerim
-- Annenin, kardeşinin, arkadaşının şehrindeki havayı tek bakışta gör.
-- **Yakınlığa göre kişiye özel**, samimi mesaj; tek dokunuşla WhatsApp'tan gönder:
+
+<img src="docs/ekran_sevdiklerim.png" width="28%" align="right" alt="Sevdiklerim">
+
+Annenin, babanın, kardeşinin, arkadaşının **yaşadığı şehirdeki havayı tek ekranda** gör.
+
+- **Sevdiğini ekle:** adını, yakınlığını (annem, babam, kardeşim, arkadaşım...) ve şehrini seç.
+  Şehir yazarken il ve ilçe önerileri çıkar.
+- Her kartta o şehrin **anlık sıcaklığı ve havası**, altında kısa bir not:
+  "Hava güzel, dışarı çıksın", "Yağmur var, şemsiyesini alsın".
+- **Mesaj gönder:** Yakınlığa göre samimi bir mesaj hazırlanır, WhatsApp ya da istediğin
+  uygulamayla tek dokunuşla gönderilir:
+
   > Annecim, nasılsın?<br>
-  > Ankara'da şu an 10°, hava parçalı bulutlu ⛅<br>
+  > Ankara'da şu an 10°, hava kapalı ☁️<br>
   > Serin, dışarı çıkarsan üstüne bir hırka al<br>
   > Seni çok seviyorum 💕
+
 - Türkçe ekler doğru çekilir: Ankara'**da**, İzmir'**de**, Sinop'**ta**.
 
+<br clear="right">
+
 ### 📅 Planlarım
-- Piknik, koşu, sahil, şehir gezisi ya da kahve buluşması planla.
-- O günün tahminine göre **10 üzerinden uygunluk puanı**, **nedeni** ("Yağış ihtimali %80"),
-  **daha uygun bir gün** önerisi ve arkadaşlarına **davet** mesajı.
+
+<img src="docs/ekran_planlarim.png" width="28%" align="right" alt="Planlarım">
+
+Bir plan oluştur, **hava o plana uygun mu** CloudHeart söylesin.
+
+- **Plan ekle:** etkinliği seç (piknik, koşu, sahil, şehir gezisi, kahve buluşması),
+  başlık kendiliğinden dolar; şehri ve günü seç.
+- O günün tahminine göre **10 üzerinden uygunluk puanı** ve **nedenleri**:
+  "Yağmur bekleniyor (%90)", "Sahil için serin".
+- Haftanın **daha uygun bir günü** varsa önerir: "Bugün (26.10) daha uygun: 9/10".
+- **Davet et:** Plan, tarih ve havayı içeren bir davet mesajı arkadaşlarına gönderilir.
+- Puanlama etkinliğe göre değişir: aynı yağmurlu gün piknik için 0/10, kahve buluşması için çok daha yüksek puan alır.
+
+<br clear="right">
 
 ## Teknolojiler
 
