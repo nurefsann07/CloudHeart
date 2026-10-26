@@ -82,6 +82,15 @@ Arkadaşa giden mesaj daha farklı, babaya ya da kardeşe giden de öyle.
 
 <br clear="right">
 
+<img src="docs/ekran_sevdigini_ekle.png" width="34%" align="right" alt="Sevdiğini ekle">
+
+**Sevdiğini eklemek** de kolay: önce kim olduğunu seçiyorsun (annem, babam, kardeşim,
+arkadaşım...), sonra adını ve nerede yaşadığını yazıyorsun. Şehri yazarken il ve ilçe
+önerileri çıkıyor, içlerinden birine dokunman yeterli. Seçtiğin yakınlığa göre mesajın
+hitabı da değişiyor: anneye "annecim", babaya "babacım" diye yazıyor.
+
+<br clear="right">
+
 ### Planlarım
 
 <img src="docs/ekran_planlarim.png" width="28%" align="right" alt="Planlarım">
@@ -96,6 +105,15 @@ Haftanın başka bir günü daha uygunsa onu da söylüyor. Mesela yarınki pikn
 Puan etkinliğe göre değişiyor. Yağmurlu bir gün piknik için kötü ama kahve buluşması için
 sorun değil. **Davet et** butonuyla planı, tarihi ve havayı içeren bir mesajı arkadaşlarına
 gönderebiliyorsun.
+
+<br clear="right">
+
+<img src="docs/ekran_yeni_plan.png" width="34%" align="right" alt="Yeni plan">
+
+**Yeni plan eklerken** önce ne yapacağını seçiyorsun: piknik, koşu, sahil, şehir gezisi ya
+da kahve buluşması. Başlık kendiliğinden doluyor, istersen değiştirebilirsin. Sonra yeri
+yazıyorsun; il, ilçe ya da semt olabilir. En son da günü seçiyorsun: bugün, yarın ya da
+haftanın başka bir günü. Ekle'ye basınca plan, puanıyla birlikte listeye geliyor.
 
 <br clear="right">
 
