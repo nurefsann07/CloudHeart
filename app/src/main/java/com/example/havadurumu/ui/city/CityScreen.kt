@@ -84,55 +84,58 @@ fun CityScreen(
     onToggleFavorite: (String) -> Unit,
     onOpenPlace: (String) -> Unit
 ) {
-    Column(
+    val side = Modifier.padding(horizontal = 16.dp)
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(Background),
+        contentPadding = PaddingValues(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GradientHeader(
-            title = "CloudHeart",
-            subtitle = "Türkiye'nin şehirlerini keşfet"
-        ) {
-            Spacer(Modifier.height(16.dp))
-            SearchField(query = state.query, onQueryChange = onQueryChange)
+        item(key = "header") {
+            GradientHeader(
+                title = "CloudHeart",
+                subtitle = "Türkiye'nin şehirlerini keşfet"
+            ) {
+                Spacer(Modifier.height(16.dp))
+                SearchField(query = state.query, onQueryChange = onQueryChange)
+            }
         }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            PillChip(
-                text = "Tümü",
-                selected = !state.favoritesOnly,
-                onClick = { onFavoritesOnlyChange(false) },
-                modifier = Modifier.weight(1f)
-            )
-            PillChip(
-                text = "Favoriler (${state.favoriteCount})",
-                selected = state.favoritesOnly,
-                onClick = { onFavoritesOnlyChange(true) },
-                modifier = Modifier.weight(1f)
+        item(key = "tabs") {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                PillChip(
+                    text = "Tümü",
+                    selected = !state.favoritesOnly,
+                    onClick = { onFavoritesOnlyChange(false) },
+                    modifier = Modifier.weight(1f)
+                )
+                PillChip(
+                    text = "Favoriler (${state.favoriteCount})",
+                    selected = state.favoritesOnly,
+                    onClick = { onFavoritesOnlyChange(true) },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+        item(key = "count") {
+            Text(
+                text = if (state.favoritesOnly) {
+                    "${state.cities.size + state.favoritePlaces.size} favori"
+                } else {
+                    "${state.cities.size + state.districts.size} sonuç"
+                },
+                modifier = Modifier.padding(start = 20.dp),
+                fontSize = 13.sp,
+                color = Muted
             )
         }
-
-        Text(
-            text = if (state.favoritesOnly) {
-                "${state.cities.size + state.favoritePlaces.size} favori"
-            } else {
-                "${state.cities.size + state.districts.size} sonuç"
-            },
-            modifier = Modifier.padding(start = 20.dp, bottom = 8.dp),
-            fontSize = 13.sp,
-            color = Muted
-        )
-
-        LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(items = state.cities, key = { it.plate }) { city ->
+        items(items = state.cities, key = { it.plate }) { city ->
+            Box(side) {
                 CityCard(
                     city = city,
                     isFavorite = state.isFavorite(city.name),
@@ -141,8 +144,10 @@ fun CityScreen(
                     onToggleFavorite = { onToggleFavorite(city.name) }
                 )
             }
+        }
 
-            items(items = state.favoritePlaces, key = { "f-$it" }) { place ->
+        items(items = state.favoritePlaces, key = { "f-$it" }) { place ->
+            Box(side) {
                 PlaceCard(
                     title = place,
                     subtitle = "favori yer",
@@ -152,12 +157,14 @@ fun CityScreen(
                     onToggleFavorite = { onToggleFavorite(place) }
                 )
             }
+        }
 
-            if (state.districts.isNotEmpty()) {
-                item(key = "districts-title") {
-                    SectionTitle("İlçe ve semtler", modifier = Modifier.padding(top = 4.dp, start = 4.dp))
-                }
-                items(items = state.districts, key = { "d-" + it.key }) { suggestion ->
+        if (state.districts.isNotEmpty()) {
+            item(key = "districts-title") {
+                SectionTitle("İlçe ve semtler", modifier = side.padding(top = 4.dp, start = 4.dp))
+            }
+            items(items = state.districts, key = { "d-" + it.key }) { suggestion ->
+                Box(side) {
                     PlaceCard(
                         title = suggestion.displayName,
                         subtitle = suggestion.kind,
@@ -168,28 +175,27 @@ fun CityScreen(
                     )
                 }
             }
+        }
 
-            if (state.cities.isEmpty() && state.districts.isEmpty() && state.favoritePlaces.isEmpty()) {
-                val query = state.query.trim()
-                when {
-                    query.isNotEmpty() && !state.favoritesOnly -> item(key = "district") {
-                        DistrictCard(query = query, onClick = { onOpenPlace(query) })
-                    }
-
-                    state.favoritesOnly && state.favoriteCount > 0 -> item(key = "no-match") {
-                        EmptyView(
-                            emoji = "🔍",
-                            message = "Favorilerinde \"$query\" yok.",
-                            actionText = "Aramayı temizle",
-                            onAction = { onQueryChange("") }
-                        )
-                    }
-                    state.favoritesOnly -> item(key = "no-favorites") {
-                        EmptyView(
-                            emoji = "☁️",
-                            message = "Henüz favorin yok.\nKalplere dokunarak ekleyebilirsin."
-                        )
-                    }
+        if (state.cities.isEmpty() && state.districts.isEmpty() && state.favoritePlaces.isEmpty()) {
+            val query = state.query.trim()
+            when {
+                query.isNotEmpty() && !state.favoritesOnly -> item(key = "district") {
+                    Box(side) { DistrictCard(query = query, onClick = { onOpenPlace(query) }) }
+                }
+                state.favoritesOnly && state.favoriteCount > 0 -> item(key = "no-match") {
+                    EmptyView(
+                        emoji = "🔍",
+                        message = "Favorilerinde \"$query\" yok.",
+                        actionText = "Aramayı temizle",
+                        onAction = { onQueryChange("") }
+                    )
+                }
+                state.favoritesOnly -> item(key = "no-favorites") {
+                    EmptyView(
+                        emoji = "☁️",
+                        message = "Henüz favorin yok.\nKalplere dokunarak ekleyebilirsin."
+                    )
                 }
             }
         }

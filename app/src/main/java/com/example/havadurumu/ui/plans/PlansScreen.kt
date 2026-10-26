@@ -112,30 +112,31 @@ fun PlansScreen(
 ) {
     var showAddDialog by rememberSaveable { mutableStateOf(false) }
 
-    Column(
+    val side = Modifier.padding(horizontal = 16.dp)
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(Background),
+        contentPadding = PaddingValues(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GradientHeader(
-            title = "Planlarım",
-            subtitle = "Hava planına uygun mu? Puanını gör, arkadaşlarını davet et"
-        )
-
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            if (cards.isEmpty()) {
-                item {
-                    EmptyView(
-                        emoji = "🧺",
-                        message = "Henüz planın yok.\nPiknik, koşu, sahil ya da kahve buluşması ekle; " +
-                            "hava uygun mu sana söyleyeyim."
-                    )
-                }
+        item(key = "header") {
+            GradientHeader(
+                title = "Planlarım",
+                subtitle = "Hava planına uygun mu? Puanını gör, arkadaşlarını davet et"
+            )
+        }
+        if (cards.isEmpty()) {
+            item {
+                EmptyView(
+                    emoji = "🧺",
+                    message = "Henüz planın yok.\nPiknik, koşu, sahil ya da kahve buluşması ekle; " +
+                        "hava uygun mu sana söyleyeyim."
+                )
             }
-            items(items = cards, key = { it.plan.id }) { card ->
+        }
+        items(items = cards, key = { it.plan.id }) { card ->
+            Box(side) {
                 PlanCard(
                     card = card,
                     onRemove = { onRemovePlan(card.plan.id) },
@@ -144,13 +145,13 @@ fun PlansScreen(
                     onInvite = onInvite
                 )
             }
-            item {
-                Button(
-                    onClick = { showAddDialog = true },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = PinkDark)
-                ) { Text("＋ Plan ekle") }
-            }
+        }
+        item {
+            Button(
+                onClick = { showAddDialog = true },
+                modifier = side.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = PinkDark)
+            ) { Text("＋ Plan ekle") }
         }
     }
 

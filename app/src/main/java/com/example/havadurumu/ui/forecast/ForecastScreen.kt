@@ -120,15 +120,18 @@ fun ForecastScreen(
             .fillMaxSize()
             .background(Brush.verticalGradient(listOf(colors.first().copy(alpha = 0.18f), Background)))
     ) {
-        GradientHeader(
-            title = placeName,
-            subtitle = success?.data?.place?.displayName?.let { it } ?: "Hava durumu",
-            colors = colors,
-            onBack = onBack,
-            trailing = {
-                FavoriteHeart(isFavorite = isFavorite(placeName), onClick = { onToggleFavorite(placeName) }, color = Color.White)
-            }
-        )
+        val header: @Composable () -> Unit = {
+            GradientHeader(
+                title = placeName,
+                subtitle = success?.data?.place?.displayName ?: "Hava durumu",
+                colors = colors,
+                onBack = onBack,
+                trailing = {
+                    FavoriteHeart(isFavorite = isFavorite(placeName), onClick = { onToggleFavorite(placeName) }, color = Color.White)
+                }
+            )
+        }
+        if (success == null) header()
 
         when (state) {
             is LoadState.Loading -> LoadingView()
@@ -138,6 +141,7 @@ fun ForecastScreen(
                 message = "\"$placeName\" diye bir yer bulamadım.\nYazımı kontrol edip tekrar dener misin?"
             )
             is LoadState.Success -> ForecastContent(
+                header = header,
                 forecast = state.data,
                 districts = districts,
                 isFavorite = isFavorite,
@@ -151,6 +155,7 @@ fun ForecastScreen(
 
 @Composable
 private fun ForecastContent(
+    header: @Composable () -> Unit,
     forecast: Forecast,
     districts: LoadState<List<DistrictWeather>>?,
     isFavorite: (String) -> Boolean,
@@ -164,60 +169,64 @@ private fun ForecastContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .navigationBarsPadding()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        NowCard(current = current, today = forecast.today)
-
-        AdviceCard(
-            title = "Bugün ne giymeliyim?",
-            lines = Advice.clothing(current, forecast.today, forecast.place),
-            background = PinkLight,
-            titleColor = PinkDark
-        )
-        AdviceCard(
-            title = "Bugün ne yapsam?",
-            lines = Advice.activities(current, forecast.place, forecast.today?.dateIso),
-            background = BlueLight,
-            titleColor = BlueDark
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        header()
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            InfoBox("Nem", "%${current.humidity}", BlueLight, BlueDark, Modifier.weight(1f))
-            InfoBox("Rüzgâr", Advice.windText(current.windSpeed), PinkLight, PinkDark, Modifier.weight(1f))
-        }
+            NowCard(current = current, today = forecast.today)
 
-        if (forecast.hourly.isNotEmpty()) {
-            SectionTitle("Saatlik tahmin")
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(forecast.hourly) { hour -> HourBox(hour) }
+            AdviceCard(
+                title = "Bugün ne giymeliyim?",
+                lines = Advice.clothing(current, forecast.today, forecast.place),
+                background = PinkLight,
+                titleColor = PinkDark
+            )
+            AdviceCard(
+                title = "Bugün ne yapsam?",
+                lines = Advice.activities(current, forecast.place, forecast.today?.dateIso),
+                background = BlueLight,
+                titleColor = BlueDark
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                InfoBox("Nem", "%${current.humidity}", BlueLight, BlueDark, Modifier.weight(1f))
+                InfoBox("Rüzgâr", Advice.windText(current.windSpeed), PinkLight, PinkDark, Modifier.weight(1f))
             }
-        }
 
-        if (forecast.daily.isNotEmpty()) {
-            SectionTitle("${forecast.daily.size} günlük tahmin")
-            forecast.daily.forEach { day -> DayRow(day) }
-        }
+            if (forecast.hourly.isNotEmpty()) {
+                SectionTitle("Saatlik tahmin")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(forecast.hourly) { hour -> HourBox(hour) }
+                }
+            }
 
-        if (districts != null) {
-            DistrictsSection(
-                state = districts,
-                isFavorite = isFavorite,
-                onRetry = onRetryDistricts,
-                onToggleFavorite = onToggleFavorite,
-                onOpenPlace = onOpenPlace
+            if (forecast.daily.isNotEmpty()) {
+                SectionTitle("${forecast.daily.size} günlük tahmin")
+                forecast.daily.forEach { day -> DayRow(day) }
+            }
+
+            if (districts != null) {
+                DistrictsSection(
+                    state = districts,
+                    isFavorite = isFavorite,
+                    onRetry = onRetryDistricts,
+                    onToggleFavorite = onToggleFavorite,
+                    onOpenPlace = onOpenPlace
+                )
+            }
+
+            Text(
+                text = "Hava: Open-Meteo.com · Konum: © OpenStreetMap",
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 12.sp,
+                color = Muted
             )
         }
-
-        Text(
-            text = "Hava: Open-Meteo.com · Konum: © OpenStreetMap",
-            modifier = Modifier.fillMaxWidth(),
-            fontSize = 12.sp,
-            color = Muted
-        )
     }
 }
 

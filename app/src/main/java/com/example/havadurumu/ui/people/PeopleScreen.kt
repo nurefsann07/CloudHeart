@@ -103,30 +103,31 @@ fun PeopleScreen(
 ) {
     var showAddDialog by rememberSaveable { mutableStateOf(false) }
 
-    Column(
+    val side = Modifier.padding(horizontal = 16.dp)
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(Background),
+        contentPadding = PaddingValues(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GradientHeader(
-            title = "Sevdiklerim",
-            subtitle = "Sevdiklerinin şehrinde hava nasıl?"
-        )
-
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            if (cards.isEmpty()) {
-                item {
-                    EmptyView(
-                        emoji = "💌",
-                        message = "Henüz kimseyi eklemedin.\nAnneni, kardeşini ya da en yakın arkadaşını ekle; " +
-                            "şehrindeki havayı gör ve ona tatlı bir mesaj gönder."
-                    )
-                }
+        item(key = "header") {
+            GradientHeader(
+                title = "Sevdiklerim",
+                subtitle = "Sevdiklerinin şehrinde hava nasıl?"
+            )
+        }
+        if (cards.isEmpty()) {
+            item {
+                EmptyView(
+                    emoji = "💌",
+                    message = "Henüz kimseyi eklemedin.\nAnneni, kardeşini ya da en yakın arkadaşını ekle; " +
+                        "şehrindeki havayı gör ve ona tatlı bir mesaj gönder."
+                )
             }
-            items(items = cards, key = { it.person.id }) { card ->
+        }
+        items(items = cards, key = { it.person.id }) { card ->
+            Box(side) {
                 PersonCard(
                     card = card,
                     onRemove = { onRemovePerson(card.person.id) },
@@ -135,13 +136,13 @@ fun PeopleScreen(
                     onSendMessage = onSendMessage
                 )
             }
-            item {
-                Button(
-                    onClick = { showAddDialog = true },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = PinkDark)
-                ) { Text("＋ Sevdiğini ekle") }
-            }
+        }
+        item {
+            Button(
+                onClick = { showAddDialog = true },
+                modifier = side.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = PinkDark)
+            ) { Text("＋ Sevdiğini ekle") }
         }
     }
 
