@@ -9,7 +9,7 @@ daha ileri gitmek istedim: Annemin şehrinde hava nasıl? Cumartesi pikniği ya�
 Bugün ne giysem, nereye gitsem?
 
 CloudHeart bu soruların cevabını veren, pembe-mavi, küçük bir Android uygulaması. Bilişim
-Kampı'ndaki Android eğitimi için Kotlin ve Jetpack Compose ile geliştirdim.
+Kampı'ndaki Android eğitimi için Kotlin ve Jetpack Compose ile geliştirdim
 
 <p align="center">
   <img src="docs/ekran_sehirler.png" width="24%" alt="Şehirler">
@@ -168,8 +168,6 @@ Başka bir gün en az 2 puan daha iyiyse o gün öneriliyor.
 
 - Plan puanı doğru hesaplanıyor mu, yağmurlu bir güne yüksek puan veriliyor mu?
 - "Kadıköy" aranınca İstanbul'daki Kadıköy mü bulunuyor?
-- "mala" yazınca alakasız yerler değil, Malazgirt mi öneriliyor?
-- Anneye giden mesajda hitap sadece bir kez mi geçiyor?
 - Şehre özel öneriler doğru şehirde mi çıkıyor, her gün değişiyor mu?
 - İnternet yokken ekranda doğru hata mesajı görünüyor mu?
 
